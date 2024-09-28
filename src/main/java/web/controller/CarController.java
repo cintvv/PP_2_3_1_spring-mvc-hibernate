@@ -20,14 +20,10 @@ public class CarController {
 
     @GetMapping(value = {"/cars", "/cars?count={}" })
     public String printWelcome(ModelMap model, @RequestParam(required = false) Integer count) {
-        if (count == null) {
+        if (count == null || count == 0 || count > carDAO.countCars()) {
             model.addAttribute("cars", carDAO.getCars());
         } else {
-            if (count < carDAO.countCars()) {
-                model.addAttribute("cars", carDAO.getCars().subList(0, count));
-            } else {
-                model.addAttribute("cars", carDAO.getCars());
-            }
+            model.addAttribute("cars", carDAO.getCars().subList(0, count));
         }
         return "cars";
     }
