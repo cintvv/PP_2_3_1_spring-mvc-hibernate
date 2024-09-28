@@ -6,11 +6,10 @@ import java.util.List;
 
 public class CarServiceImpl implements CarService {
     @Override
-    public int count(List<Car> cars) {
-        int count = 0;
-        for (Car car : cars) {
-            count++;
+    public List<Car> count(List<Car> cars, int count) {
+        if (count < 0 || count > cars.size()) {
+            return cars;
         }
-        return count;
+        return cars.subList(0, count);
     }
 }

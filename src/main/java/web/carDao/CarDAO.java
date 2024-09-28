@@ -24,11 +24,4 @@ public class CarDAO {
     public List<Car> getCars() {
         return cars;
     }
-
-    public int countCars() {
-        CarServiceImpl carService = new CarServiceImpl();
-        return carService.count(cars);
-    }
-
-
 }

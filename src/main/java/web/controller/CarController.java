@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.carDao.CarDAO;
+import web.model.Car;
+import web.service.CarServiceImpl;
+
+import java.util.List;
 
 
 @Controller
@@ -20,10 +24,11 @@ public class CarController {
 
     @GetMapping(value = {"/cars", "/cars?count={}" })
     public String printWelcome(ModelMap model, @RequestParam(required = false) Integer count) {
-        if (count == null || count == 0 || count > carDAO.countCars()) {
-            model.addAttribute("cars", carDAO.getCars());
+        CarServiceImpl carService = new CarServiceImpl();
+        if (count != null) {
+            model.addAttribute("cars", carService.count(carDAO.getCars(), count));
         } else {
-            model.addAttribute("cars", carDAO.getCars().subList(0, count));
+            model.addAttribute("cars", carService.count(carDAO.getCars(), carDAO.getCars().size()));
         }
         return "cars";
     }
